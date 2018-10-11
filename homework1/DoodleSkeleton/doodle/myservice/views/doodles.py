@@ -59,14 +59,10 @@ def person_poll(id, person):
 def vote(id, request):
     result = ""
     #TODO: extract person and option fields from the JSON request
-    print(request.is_json)
     json = request.get_json()
-    person = json['person']
-    option = json['option']
-
     try:
         # TODO: cast a vote from person in  _ACTIVEPOLLS[id]
-        result = _ACTIVEPOLLS[id].vote(person, option)
+        result = _ACTIVEPOLLS[id].vote(json['person'], json['option'])
     except UserAlreadyVotedException:
         abort(400) # Bad Request
     except NonExistingOptionException:
